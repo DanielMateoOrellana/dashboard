@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import Grid from "@mui/material/Unstable_Grid2";
+import Indicator from "./components/Indicator";
 import './App.css'
+import Summary from './components/Summary';
+
+import BasicTable from './components/BasicTable';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+    <Grid container spacing={5}>
+      <Grid xs={12} sm={4} md={3} lg={10}>      <BasicTable /></Grid>
+
+      <Grid xs={6} sm={4} md={3} lg={10}>      <Indicator title='Precipitación' subtitle='Probabilidad' value={0.13} /></Grid>
+
+      <Grid xs={6} sm={4} md={3} lg={15} alignSelf={'center'}>      <Summary></Summary></Grid>
+
+
+
+
+
+
+    </Grid>
+
+
+
+
   )
 }
 

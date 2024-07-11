@@ -1,30 +1,24 @@
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+import React from 'react';
+import { Card, CardContent, Typography, useTheme } from '@mui/material';
 
-interface Config {
-    title?: String;
-    subtitle?: String;
-    value: Number;
-}
+const Indicator = ({ title, subtitle, value }) => {
+  const theme = useTheme();
 
-export default function Indicator(config: Config) {
-    return (
-        <Paper
-        sx={{
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <Typography component="h2" variant="h6" color="primary" gutterBottom>
-            {config.title} 
+  return (
+    <Card style={{ margin: theme.spacing(2), boxShadow: theme.shadows[3], borderRadius: theme.shape.borderRadius }}>
+      <CardContent>
+        <Typography variant="h6" color="textSecondary" gutterBottom>
+          {title}
         </Typography>
-        <Typography component="p" variant="h4">
-            {config.value.toString()}
+        <Typography variant="h4" component="h2">
+          {value}
         </Typography>
-        <Typography color="text.secondary" sx={{ flex: 1 }}>
-            {config.subtitle}
+        <Typography color="textSecondary">
+          {subtitle}
         </Typography>
-    </Paper> 
-    )
-}
+      </CardContent>
+    </Card>
+  );
+};
+
+export default Indicator;

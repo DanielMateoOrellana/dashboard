@@ -1,59 +1,82 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React from 'react';
+import { useWeather } from '../WeatherContext';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Tooltip,
+  useTheme,
+} from '@mui/material';
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
+const BasicTable = ({ onRowSelect }) => {
+  const weatherData = useWeather();
+  const theme = useTheme();
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  if (!weatherData) {
+    return <p>Loading...</p>;
+  }
 
-export default function BasicTable() {
+  // Procesa los datos necesarios del XML para la tabla
+  const rows = Array.from(weatherData.querySelectorAll('time')).slice(0, 20).map((timeNode) => ({
+    time: timeNode.getAttribute('from'),
+    temperature: parseFloat(timeNode.querySelector('temperature').getAttribute('value')).toFixed(2),
+    windSpeed: parseFloat(timeNode.querySelector('windSpeed').getAttribute('mps')).toFixed(2),
+    humidity: parseFloat(timeNode.querySelector('humidity').getAttribute('value')).toFixed(2),
+    pressure: parseFloat(timeNode.querySelector('pressure').getAttribute('value')).toFixed(2),
+  }));
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+    <TableContainer component={Paper} style={{ margin: theme.spacing(2), borderRadius: theme.shape.borderRadius, boxShadow: theme.shadows[5] }}>
+      <Typography variant="h6" style={{ margin: theme.spacing(2, 0) }}>
+        Weather Forecast
+      </Typography>
+      <Table aria-label="weather table">
+        <TableHead style={{ backgroundColor: theme.palette.primary.main }}>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell style={{ color: theme.palette.common.white, fontWeight: 'bold' }}>Time</TableCell>
+            <TableCell align="right" style={{ color: theme.palette.common.white, fontWeight: 'bold' }}>
+              <Tooltip title="Temperature in Kelvin" placement="top" arrow>
+                <span>Temperature (K)</span>
+              </Tooltip>
+            </TableCell>
+            <TableCell align="right" style={{ color: theme.palette.common.white, fontWeight: 'bold' }}>
+              <Tooltip title="Wind Speed in meters per second" placement="top" arrow>
+                <span>Wind Speed (m/s)</span>
+              </Tooltip>
+            </TableCell>
+            <TableCell align="right" style={{ color: theme.palette.common.white, fontWeight: 'bold' }}>
+              <Tooltip title="Humidity in percentage" placement="top" arrow>
+                <span>Humidity (%)</span>
+              </Tooltip>
+            </TableCell>
+            <TableCell align="right" style={{ color: theme.palette.common.white, fontWeight: 'bold' }}>
+              <Tooltip title="Pressure in hPa" placement="top" arrow>
+                <span>Pressure (hPa)</span>
+              </Tooltip>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
+          {rows.map((row, index) => (
+            <TableRow key={index} hover onClick={() => onRowSelect(row)}>
+              <TableCell component="th" scope="row" style={{ fontSize: '1rem' }}>
+                {row.time}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right" style={{ fontSize: '1rem' }}>{row.temperature}</TableCell>
+              <TableCell align="right" style={{ fontSize: '1rem' }}>{row.windSpeed}</TableCell>
+              <TableCell align="right" style={{ fontSize: '1rem' }}>{row.humidity}</TableCell>
+              <TableCell align="right" style={{ fontSize: '1rem' }}>{row.pressure}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default BasicTable;

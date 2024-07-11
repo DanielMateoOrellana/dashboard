@@ -1,8 +1,7 @@
-import React from 'react';
 import { useWeather } from '../WeatherContext';
 import { Typography, Card, CardContent, CardMedia } from '@mui/material';
 
-const LocationInfo = () => {
+const LocationInfo: React.FC = () => {
   const weatherData = useWeather();
 
   if (!weatherData) {
@@ -10,10 +9,15 @@ const LocationInfo = () => {
   }
 
   const locationNode = weatherData.querySelector('location');
-  const name = locationNode.querySelector('name').textContent;
-  const country = locationNode.querySelector('country').textContent;
-  const latitude = locationNode.querySelector('location').getAttribute('latitude');
-  const longitude = locationNode.querySelector('location').getAttribute('longitude');
+  
+  if (!locationNode) {
+    return <p>No location data available</p>;
+  }
+
+  const name = locationNode.querySelector('name')?.textContent || 'Unknown';
+  const country = locationNode.querySelector('country')?.textContent || 'Unknown';
+  const latitude = locationNode.querySelector('location')?.getAttribute('latitude') || 'Unknown';
+  const longitude = locationNode.querySelector('location')?.getAttribute('longitude') || 'Unknown';
 
   return (
     <Card style={{ marginBottom: '20px' }}>

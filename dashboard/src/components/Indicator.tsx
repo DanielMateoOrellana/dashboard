@@ -1,7 +1,12 @@
-import React from 'react';
 import { Card, CardContent, Typography, useTheme } from '@mui/material';
 
-const Indicator = ({ title, subtitle, value }) => {
+interface IndicatorProps {
+  title: string;
+  subtitle: string;
+  value: number | string;
+}
+
+const Indicator: React.FC<IndicatorProps> = ({ title, subtitle, value }) => {
   const theme = useTheme();
 
   return (

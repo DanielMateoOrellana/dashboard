@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import './App.css';
 import BasicTable from './components/BasicTable';
@@ -7,7 +7,6 @@ import { WeatherProvider, useWeather } from './WeatherContext';
 import IndicatorsGrid from './components/IndicatorsGrid';
 import LocationInfo from './components/LocationInfo';
 import SunInfo from './components/SunInfo';
-import WindRoseChart from './components/WindRoseChart';
 
 const App = () => {
   const [selectedData, setSelectedData] = useState(null);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useWeather } from '../WeatherContext';
 import {
   Table,
@@ -13,7 +12,11 @@ import {
   useTheme,
 } from '@mui/material';
 
-const BasicTable = ({ onRowSelect }) => {
+interface BasicTableProps {
+  onRowSelect: (data: any) => void;
+}
+
+const BasicTable: React.FC<BasicTableProps> = ({ onRowSelect }) => {
   const weatherData = useWeather();
   const theme = useTheme();
 
@@ -23,11 +26,11 @@ const BasicTable = ({ onRowSelect }) => {
 
   // Procesa los datos necesarios del XML para la tabla
   const rows = Array.from(weatherData.querySelectorAll('time')).slice(0, 20).map((timeNode) => ({
-    time: timeNode.getAttribute('from'),
-    temperature: parseFloat(timeNode.querySelector('temperature').getAttribute('value')).toFixed(2),
-    windSpeed: parseFloat(timeNode.querySelector('windSpeed').getAttribute('mps')).toFixed(2),
-    humidity: parseFloat(timeNode.querySelector('humidity').getAttribute('value')).toFixed(2),
-    pressure: parseFloat(timeNode.querySelector('pressure').getAttribute('value')).toFixed(2),
+    time: timeNode.getAttribute('from') || '',
+    temperature: parseFloat(timeNode.querySelector('temperature')?.getAttribute('value') || '0').toFixed(2),
+    windSpeed: parseFloat(timeNode.querySelector('windSpeed')?.getAttribute('mps') || '0').toFixed(2),
+    humidity: parseFloat(timeNode.querySelector('humidity')?.getAttribute('value') || '0').toFixed(2),
+    pressure: parseFloat(timeNode.querySelector('pressure')?.getAttribute('value') || '0').toFixed(2),
   }));
 
   return (

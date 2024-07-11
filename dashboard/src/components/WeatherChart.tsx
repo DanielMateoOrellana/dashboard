@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   LineChart,
   Line,
@@ -10,7 +9,18 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const WeatherChart = ({ data }) => {
+// Definición de tipos para las propiedades del componente
+interface WeatherChartProps {
+  data: Array<{
+    time: string;
+    temperature: number;
+    windSpeed: number;
+    humidity: number;
+    pressure: number;
+  }>;
+}
+
+const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
   if (!data || data.length === 0) {
     return <p>Selecciona una fila de la tabla para mostrar su respectivo gráfico</p>;
   }

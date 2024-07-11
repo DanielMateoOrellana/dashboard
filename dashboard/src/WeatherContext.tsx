@@ -1,13 +1,15 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-const WeatherContext = createContext(null);
+type WeatherContextType = Document | null;
+
+const WeatherContext = createContext<WeatherContextType>(null);
 
 export const useWeather = () => {
   return useContext(WeatherContext);
 };
 
-export const WeatherProvider = ({ children }) => {
-  const [weatherData, setWeatherData] = useState(null);
+export const WeatherProvider = ({ children }: { children: React.ReactNode }) => {
+  const [weatherData, setWeatherData] = useState<WeatherContextType>(null);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -16,7 +18,6 @@ export const WeatherProvider = ({ children }) => {
         const data = await response.text();
         const parser = new DOMParser();
         const xml = parser.parseFromString(data, 'application/xml');
-        console.log(xml); // Verifica los datos aquí
         setWeatherData(xml);
       } catch (error) {
         console.error('Error fetching the data:', error);

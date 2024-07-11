@@ -1,4 +1,3 @@
-import React from 'react';
 import { useWeather } from '../WeatherContext';
 import { Card, CardContent, Typography } from '@mui/material';
 

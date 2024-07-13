@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, useTheme } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 
 interface IndicatorProps {
   title: string;
@@ -7,18 +7,16 @@ interface IndicatorProps {
 }
 
 const Indicator: React.FC<IndicatorProps> = ({ title, subtitle, value }) => {
-  const theme = useTheme();
-
   return (
-    <Card style={{ margin: theme.spacing(2), boxShadow: theme.shadows[3], borderRadius: theme.shape.borderRadius }}>
+    <Card>
       <CardContent>
-        <Typography variant="h6" color="textSecondary" gutterBottom>
+        <Typography variant="h6" component="div">
           {title}
         </Typography>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h4" component="div">
           {value}
         </Typography>
-        <Typography color="textSecondary">
+        <Typography variant="body2" color="textSecondary">
           {subtitle}
         </Typography>
       </CardContent>

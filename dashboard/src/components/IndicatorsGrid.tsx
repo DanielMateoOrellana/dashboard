@@ -25,40 +25,40 @@ const IndicatorsGrid = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Temperatura" subtitle="K" value={temperature} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Sensación Térmica" subtitle="K" value={feelsLike} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Velocidad del Viento" subtitle="m/s" value={windSpeed} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Ráfaga de Viento" subtitle="m/s" value={windGust} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Dirección del Viento" subtitle="" value={windDirection} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Presión" subtitle="hPa" value={pressure} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Humedad" subtitle="%" value={humidity} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={6} sm={6} md={3} lg={3}>
         <Indicator title="Cobertura de Nubes" subtitle="%" value={clouds} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
-        <Indicator title="Precipitación (probabilidad)" subtitle="%" value={precipitationProbability} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
-        <Indicator title="Precipitación (valor)" subtitle="mm" value={precipitationValue} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
-        <Indicator title="Visibilidad" subtitle="m" value={visibility} />
+      <Grid container item xs={12} justifyContent="center" spacing={3}>
+        <Grid item xs={6} sm={6} md={3} lg={3}>
+          <Indicator title="Precipitación (probabilidad)" subtitle="%" value={precipitationProbability} />
+        </Grid>
+        <Grid item xs={6} sm={6} md={3} lg={3}>
+          <Indicator title="Precipitación (valor)" subtitle="mm" value={precipitationValue} />
+        </Grid>
+        <Grid item xs={6} sm={6} md={3} lg={3}>
+          <Indicator title="Visibilidad" subtitle="m" value={visibility} />
+        </Grid>
       </Grid>
     </Grid>
   );

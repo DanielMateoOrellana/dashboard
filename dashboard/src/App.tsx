@@ -75,6 +75,10 @@ const App = () => {
           </Grid>
 
           <Grid item xs={12}>
+            <MapView latitude={-2.1667} longitude={-79.9} />
+          </Grid>
+
+          <Grid item xs={12}>
             <SunInfo />
           </Grid>
 
@@ -106,9 +110,6 @@ const App = () => {
             <WeatherChart data={selectedData ? [selectedData] : chartData} />
           </Grid>
 
-          <Grid item xs={12}>
-            <MapView latitude={-2.1667} longitude={-79.9} />
-          </Grid>
         </Grid>
       </div>
     </WeatherProvider>

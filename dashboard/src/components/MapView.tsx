@@ -8,7 +8,7 @@ interface MapViewProps {
 }
 
 const customIcon = L.icon({
-  iconUrl: 'https://example.com/icon.png', // Cambia esta URL al ícono que quieras usar
+  iconUrl: 'https://example.com/icon.png',
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],

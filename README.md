@@ -1,50 +1,77 @@
-# ChismeGPT Core
+# ECUAFAST - Simulador de Control Portuario
 
-## Descripción
+Este proyecto implementa un sistema distribuido para la simulación del control portuario en Ecuador. El programa utiliza hilos para simular entidades de control (SRI, SENAE, SUPERCIA), un administrador del puerto y barcos que realizan operaciones concurrentes.
 
-Este programa implementa el core transaccional para el sistema **ChismeGPT**, un servicio digital con dos tipos de usuarios: **pre-pago** y **pos-pago**. El core se encarga de recibir mensajes de los usuarios y procesarlos en función de ciertas reglas de concurrencia y prioridad.
+---
 
-## Requisitos
+## Requisitos del sistema
+- Sistema operativo: Linux (recomendado)
+- Compilador: `gcc` con soporte para C99 o ANSI C
+- Herramientas adicionales: `make` (opcional)
 
-1. **Concurrencia**: El sistema puede procesar un número limitado de mensajes de manera concurrente. Este número máximo de mensajes concurrentes es configurable al ejecutar el programa.
-2. **Prioridad de mensajes**: Los mensajes **pospago** tienen prioridad sobre los mensajes **prepago**, incluso si los mensajes prepago están esperando en la cola.
-3. **Tiempo de procesamiento**: Los mensajes se procesan simulando un tiempo de espera (en microsegundos) para cada mensaje.
-4. **Suspensión y reanudación**: Los mensajes de prepago pueden ser suspendidos y reanudados dependiendo de los mensajes pospago en espera.
+---
 
-## Uso
+## Estructura del proyecto
+El proyecto está compuesto por los siguientes archivos:
+- `main.c`: Archivo principal que coordina el programa.
+- `ship.c` y `ship.h`: Manejo de las estructuras de datos para los barcos.
+- `control_entities.c` y `control_entities.h`: Implementación de las entidades de control.
+- `port_admin.c` y `port_admin.h`: Funciones para el administrador del puerto.
+- `utils.c` y `utils.h`: Funciones auxiliares, como la gestión de la cola y estadísticas.
+- `Makefile`: Archivo para facilitar la compilación.
 
-### Compilación
+---
 
-1. Asegúrate de tener un compilador de C disponible (por ejemplo, GCC).
-2. Compila el código fuente con el siguiente comando:
+## Instrucciones de compilación
+Para compilar el proyecto, sigue estos pasos:
 
-`gcc -o chismegpt chismegpt.c -lpthread`
+1. Asegúrate de que tienes instalado el compilador `gcc`.
+2. Abre una terminal en la carpeta donde se encuentran los archivos del proyecto.
+3. Ejecuta el comando:
+`Make`
 
+Esto generará un archivo ejecutable llamado `ecufast`.
 
-### Ejecución
+---
 
-Para ejecutar el programa, utiliza el siguiente comando:
+## Instrucciones de ejecución
+Para ejecutar el programa, usa el siguiente comando:
+`./ecufast <numero_de_barcos>`
 
-`./chismegpt <número de mensajes concurrentes>`
+- `<numero_de_barcos>`: Cantidad de barcos iniciales a simular.
 
+### Ejemplo de ejecución:
 
-**Parámetros**:
-- `<número de mensajes concurrentes>`: 
-Número máximo de mensajes que el sistema puede procesar simultáneamente. Este valor es un parámetro que debe pasarse al ejecutar el programa. Si no se proporciona, se utilizará un valor predeterminado de `5`.
+`./ecufast 5`
 
-Ejemplo:
+Esto iniciará el programa con 5 barcos iniciales.
 
-`./chismegpt5`
+---
 
+## Funcionamiento del programa
+1. Al iniciar, el programa procesa automáticamente los barcos iniciales.
+2. Una vez procesados, se muestra un menú interactivo con las siguientes opciones:
+   - **1. Añadir más barcos:** Permite agregar más barcos a la simulación.
+   - **2. Ver estado actual:** Muestra el número de barcos procesados y los que quedan en cola.
+   - **3. Salir del programa:** Finaliza la simulación.
 
-Este comando ejecutará el programa permitiendo que hasta 5 mensajes sean procesados simultáneamente.
+---
 
-## Detalles de implementación
+## Notas importantes
+- El programa utiliza semáforos y mutex para manejar la concurrencia y proteger los recursos compartidos.
+- El tiempo de procesamiento de los barcos varía según las reglas de aforo y destino.
+- Si un barco falla en su aproximación (10% de probabilidad), se elimina de la cola.
 
-- **Semáforos y Mutexes**: El programa utiliza semáforos para limitar el número de hilos concurrentes y mutexes para asegurar la sincronización correcta en las colas de mensajes. Los mensajes **pospago** tienen siempre prioridad sobre los mensajes **prepago**.
-- **Suspensión y Reanudación de Hilos**: Cuando un mensaje **pospago** entra en la cola, cualquier hilo que esté procesando un mensaje **prepago** se suspende hasta que todos los mensajes **pospago** sean procesados.
+---
 
-## Notas
+## Limpieza de archivos generados
+Para limpiar los archivos de compilación generados por `make`, ejecuta:
 
-- Asegúrate de ejecutar el programa con suficientes permisos de sistema si estás trabajando en un entorno restringido.
-- El programa está diseñado para simular un sistema de procesamiento concurrente con reglas de prioridad, lo que permite experimentar con escenarios de alta concurrencia.
+`make clean`
+
+Esto eliminará el ejecutable `ecufast` y otros archivos temporales.
+
+---
+
+## Créditos
+Desarrollado como parte de un simulador de sistemas distribuidos para la gestión portuaria. Proyecto de la materia de Sistemas Operativos dictada por el PhD. Daniel Ochoa.
